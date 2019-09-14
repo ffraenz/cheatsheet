@@ -3,6 +3,16 @@
 
 Just another nasty cheatsheet.
 
+Jump to a section:
+
+- [Docker](#docker)
+- [Git](#git)
+- [Node.js](#nodejs)
+- [MySQL](#mysql)
+- [SSH](#ssh)
+- [macOS](#macos)
+- [Windows](#windows)
+
 ## Docker
 
 ### Copy folder between Docker container and host
@@ -24,6 +34,19 @@ sudo docker exec -i container_name bash -c 'mysql -u $DB_USER -p"$DB_PASS" --def
 ```
 
 ## Git
+
+### Change remotes
+
+```bash
+# List remotes
+git remote -v
+# Add an 'origin' remote
+git remote add origin git@github.com:ffraenz/macos-config.git
+# Change the 'origin' remote's URL
+git remote set-url origin git@github.com:ffraenz/macos-config.git
+# Remove the 'origin' remote
+git remote rm origin
+```
 
 ### Change file name case
 
@@ -86,11 +109,35 @@ sudo chmod 644 ~/.ssh/authorized_keys
 sudo chmod 600 ~/.ssh/id_*
 ```
 
+## macOS
+
+### Create a bootable macOS installer on macOS
+
+See [How to create a bootable installer for macOS](https://support.apple.com/en-us/HT201372).
+
 ## Windows
+
+### Create a bootable Windows 10 installer on macOS
+
+First download a Windows 10 ISO image [from this Microsoft page](https://www.microsoft.com/software-download/windows10ISO). After that follow these steps:
+
+```bash
+# Identify the disk identifier (disk#)
+diskutil list
+# Erase and format disk
+diskutil eraseDisk MS-DOS "WIN10" GPT disk#
+# Mount the ISO file - returning the mounted volume name
+hdiutil mount ~/Downloads/Win10_XXXX_XX_English_x64.iso
+# Copy ISO content to the drive
+cp -rp /Volumes/ISOVolumeName/* /Volumes/WIN10/
+# Unmount disks, the ISO file is no longer needed
+hdiutil unmount /Volumes/WIN10/
+hdiutil unmount /Volumes/ISOVolumeName/
+```
 
 ### Extend Windows XP trial period
 
-Extending the trial period is limited to 4 times. Boot into safe mode by pressing F8 while booting up and choosing 'Safe mode'. Login with a regular user, open the start menu and click ‘Run’, then type:
+Extending the trial period is limited to 4 times. Boot into safe mode by pressing `F8` while booting up and choosing 'Safe mode'. Login with a regular user, open the start menu and click ‘Run’, then type:
 
 ```
 rundll32.exe syssetup,SetupOobeBnk
