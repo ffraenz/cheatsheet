@@ -125,14 +125,14 @@ First download a Windows 10 ISO image [from this Microsoft page](https://www.mic
 # Identify the disk identifier (disk#)
 diskutil list
 # Erase and format disk
-diskutil eraseDisk MS-DOS "WIN10" GPT disk#
+diskutil eraseDisk MS-DOS "WINDOWS10" MBR disk#
 # Mount the ISO file - returning the mounted volume name
 hdiutil mount ~/Downloads/Win10_XXXX_XX_English_x64.iso
 # Copy ISO content to the drive
-cp -rp /Volumes/ISOVolumeName/* /Volumes/WIN10/
+cp -rp /Volumes/CCCOMA_ISO_VOLUME/* /Volumes/WINDOWS10/
 # Unmount disks, the ISO file is no longer needed
-hdiutil unmount /Volumes/WIN10/
-hdiutil unmount /Volumes/ISOVolumeName/
+hdiutil unmount /Volumes/WINDOWS10/
+hdiutil unmount /Volumes/CCCOMA_ISO_VOLUME/
 ```
 
 ### Extend Windows XP trial period
@@ -141,4 +141,18 @@ Extending the trial period is limited to 4 times. Boot into safe mode by pressin
 
 ```
 rundll32.exe syssetup,SetupOobeBnk
+```
+
+### Clean a disk
+
+During Windows installation or when setting up a drive for the first use, you may need to clean or reset all partitions on a drive removing all data from it. For that open `cmd` and run `diskpart`, then type:
+
+```bat
+list disk
+REM Identify the disk you want to reset
+select disk #
+REM Caution! The following command is dangerous.
+clean
+REM Check on the results
+list disk
 ```
