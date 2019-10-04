@@ -10,6 +10,7 @@ Jump to a section:
 - [Node.js](#nodejs)
 - [MySQL](#mysql)
 - [SSH](#ssh)
+- [Compression](#compression)
 - [macOS](#macos)
 - [Windows](#windows)
 
@@ -71,8 +72,8 @@ git config --global user.signingkey 583D205C93C01BC0
 ### Fix global and n package permissions
 
 ```bash
-sudo chown -R $(whoami):admin /usr/local/lib/node_modules/
-sudo chown -R $(whoami):admin /usr/local/n/
+sudo mkdir -p /usr/local/n
+sudo chown -R $(whoami) /usr/local/n /usr/local/bin /usr/local/lib /usr/local/include /usr/local/share
 ```
 
 ## MySQL
@@ -104,9 +105,28 @@ tail -f /var/log/mysql/mysql.log
 ### Fix `~/.ssh` permissions
 
 ```bash
+chown -R $USER ~/.ssh
 sudo chmod 700 ~/.ssh
 sudo chmod 644 ~/.ssh/authorized_keys
-sudo chmod 600 ~/.ssh/id_*
+sudo chmod 600 ~/.ssh/id_* ~/.ssh/config
+```
+
+## Compression
+
+### Create a tar archive
+
+Create an archive (`-c`) using gzip compression (`-z`) with the given filename (`-f`):
+
+```bash
+tar -zcf archive.tar.gz path/to/folder
+```
+
+### Extract a tar archive
+
+Extract a tar ball (`-x`) with the given filename (`-f`):
+
+```bash
+tar -xf archive.tar.gz
 ```
 
 ## macOS
