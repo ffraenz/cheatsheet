@@ -11,6 +11,7 @@ Jump to a section:
 - [MySQL](#mysql)
 - [SSH](#ssh)
 - [Compression](#compression)
+- [Image processing](#image-processing)
 - [macOS](#macos)
 - [Windows](#windows)
 
@@ -102,6 +103,18 @@ tail -f /var/log/mysql/mysql.log
 
 ## SSH
 
+### Add public key to a host's authorized keys
+
+```bash
+ssh-copy-id -i ~/.ssh/id_rsa user@host
+```
+
+### Defer public key from existing private key
+
+```bash
+ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
+```
+
 ### Fix `~/.ssh` permissions
 
 ```bash
@@ -127,6 +140,19 @@ Extract a tar ball (`-x`) with the given filename (`-f`):
 
 ```bash
 tar -xf archive.tar.gz
+```
+
+## Image processing
+
+### Create multi-resolution favicon
+
+```bash
+# Install prerequisites are available
+brew install imagemagick optipng
+
+# Optimize source PNGs and generate ICO file
+optipng -o7 *.png
+convert favicon-*.png favicon.ico
 ```
 
 ## macOS
