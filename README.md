@@ -181,14 +181,6 @@ hdiutil unmount /Volumes/WINDOWS10/
 hdiutil unmount /Volumes/CCCOMA_ISO_VOLUME/
 ```
 
-### Extend Windows XP trial period
-
-Extending the trial period is limited to 4 times. Boot into safe mode by pressing `F8` while booting up and choosing 'Safe mode'. Login with a regular user, open the start menu and click ‘Run’, then type:
-
-```
-rundll32.exe syssetup,SetupOobeBnk
-```
-
 ### Clean a disk
 
 During Windows installation or when setting up a drive for the first use, you may need to clean or reset all partitions on a drive removing all data from it. For that open `cmd` and run `diskpart`, then type:
@@ -202,3 +194,15 @@ clean
 REM Check on the results
 list disk
 ```
+
+### Tunnel Windows Remote Desktop (RDP) through SSH on Linux
+
+When having an an on-premise Linux server to SSH into it is possible to tunnel an RDP connection through SSH port forwarding to remote control a Windows machine from a Mac located outside the network.
+
+Establish port forwarding between the Mac and a remote Linux host:
+
+```
+ssh -N -L 13389:[Remote IP]:3389 host
+```
+
+Now connect with the RDP client to `127.0.0.1:13389` as if it were the remote server.
