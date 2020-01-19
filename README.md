@@ -126,20 +126,34 @@ sudo chmod 600 ~/.ssh/id_* ~/.ssh/config
 
 ## Compression
 
-### Create a tar archive
+### Tar archive compression and extraction
 
-Create an archive (`-c`) using gzip compression (`-z`) with the given filename (`-f`):
+Create an archive (`-c`) using gzip compression (`-z`) with the given filename (`-f`).
+Given the (`-C`) option `tar` changes into the given folder before compressing the target `.` preventing absolute URLs from showing up in the resulting archive.
 
 ```bash
-tar -zcf archive.tar.gz path/to/folder
+tar -zcf archive.tar.gz -C path/to/folder .
 ```
-
-### Extract a tar archive
 
 Extract a tar ball (`-x`) with the given filename (`-f`):
 
 ```bash
 tar -xf archive.tar.gz
+```
+
+### ZIP archive compression and extraction
+
+Create an archive from a folder (`-r`) without invisible Mac resource files (`-X`).
+
+```bash
+zip -r -X archive.zip path/to/folder
+zip archive.zip file1 file2 file3
+```
+
+Extract a ZIP archive into the same folder:
+
+```bash
+unzip archive.zip
 ```
 
 ## Image processing
