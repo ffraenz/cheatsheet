@@ -3,12 +3,11 @@
 
 Just another nasty cheatsheet.
 
-Jump to a section:
-
 - [Docker](#docker)
 - [Git](#git)
 - [Node.js](#nodejs)
 - [MySQL](#mysql)
+- [Shell scripting](#shell-scripting)
 - [SSH](#ssh)
 - [Compression](#compression)
 - [Image processing](#image-processing)
@@ -100,6 +99,60 @@ Follow default MySQL log:
 ```bash
 tail -f /var/log/mysql/mysql.log
 ```
+
+## Shell scripting
+
+### Shebang
+
+In Unix, when a text file has a shebang, it is interpreted as an executable file.
+
+```bash
+#!/bin/sh
+#!/bin/bash
+#!/usr/bin/env python
+```
+
+### Date and time
+
+Common `date` command formats:
+
+| Description         | Command            | Output                   |
+| ------------------- | ------------------ | ------------------------ |
+| Date                | `date +"%d.%m.%Y"` | 09.02.2020               |
+| Date (path safe)    | `date +%F`         | 2020-02-09               |
+| Time                | `date +%T`         | 21:23:52                 |
+| Time (path safe)    | `date +"%H-%M-%S"` | 21-23-52                 |
+| Local date and time | `date +%c`         | Sun Feb  9 21:23:52 2020 |
+| Unix timestamp      | `date +%s`         | 1581279832               |
+
+### Redirect shell script stdout & stderr to a log file
+
+This command redirects the following `stdout` and `stderr` to both a log file and
+the `stdout` of the shell script.
+
+```bash
+exec 1> >(tee $LOG_PATH) 2>&1
+echo "Hello, stdout." >&1
+echo "Hello, stderr." >&2
+```
+
+### Shell script control flow
+
+Common bash control flow structures:
+
+| Description                                    | Structure                          |
+| ---------------------------------------------- | ---------------------------------- |
+| String `$a` equals `$b`                        | `if [ $a = $b ]; then ... fi`      |
+| String `$a` does not equal `$b`                | `if [ $a != $b ]; then ... fi`     |
+| `$string` is empty `-z` / not empty `-n`       | `if [ -z $string ]; then ... fi`   |
+| `$path` exists                                 | `if [ -e $path ]; then ... fi`     |
+| `$path` is a file `-f` / directory `-d`        | `if [ -f $path ]; then ... fi`     |
+| `$path` is readable `-r` / `-w` / `-x` by user | `if [ -r $path ]; then ... fi`     |
+| `$a` is newer `-nt` / older `-ot` than `$b`    | `if [ $a -nt $b ]; then ... fi`    |
+| For loop over values                           | `for i in 1 2 3 4 5; do ... done`  |
+| For loop over files                            | `for PATH in /foo/*; do ... done`  |
+| For loop over directories                      | `for PATH in /foo/*/; do ... done` |
+| While loop                                     | `while [ condition ]; do ... done` |
 
 ## SSH
 
