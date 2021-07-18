@@ -67,6 +67,12 @@ git config --global commit.gpgsign true
 git config --global user.signingkey 583D205C93C01BC0
 ```
 
+### Create a file patch using diff
+
+```bash
+diff -Naur original_file_name changed_file_name > name.patch
+```
+
 ## Node.js
 
 ### Fix global and n package permissions
@@ -136,7 +142,7 @@ echo "Hello, stdout." >&1
 echo "Hello, stderr." >&2
 ```
 
-### Shell script control flow
+### Typical control flow structures
 
 Common bash control flow structures:
 
@@ -155,6 +161,12 @@ Common bash control flow structures:
 | While loop                                     | `while [ condition ]; do ... done` |
 
 ## SSH
+
+### Create SSH public and private key pair
+
+```bash
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -C "name@example.com"
+```
 
 ### Add public key to a host's authorized keys
 
@@ -185,7 +197,7 @@ Create an archive (`-c`) using gzip compression (`-z`) with the given filename (
 Given the (`-C`) option `tar` changes into the given folder before compressing the target `.` preventing absolute URLs from showing up in the resulting archive.
 
 ```bash
-tar -zcf archive.tar.gz -C path/to/folder .
+COPYFILE_DISABLE=1 tar -zcf archive.tar.gz -C path/to/folder *
 ```
 
 Extract a tar ball (`-x`) with the given filename (`-f`):
@@ -214,7 +226,7 @@ unzip archive.zip
 ### Create multi-resolution favicon
 
 ```bash
-# Install prerequisites are available
+# Make prerequisites available
 brew install imagemagick optipng
 
 # Optimize source PNGs and generate ICO file
@@ -235,14 +247,19 @@ See [How to create a bootable installer for macOS](https://support.apple.com/en-
 First download a Windows 10 ISO image [from this Microsoft page](https://www.microsoft.com/software-download/windows10ISO). After that follow these steps:
 
 ```bash
+# If not done yet, install wimlib to split files that are too big
+brew install wimlib
+
 # Identify the disk identifier (disk#)
 diskutil list
 # Erase and format disk
 diskutil eraseDisk MS-DOS "WINDOWS10" MBR disk#
 # Mount the ISO file - returning the mounted volume name
 hdiutil mount ~/Downloads/Win10_XXXX_XX_English_x64.iso
-# Copy ISO content to the drive
-cp -rp /Volumes/CCCOMA_ISO_VOLUME/* /Volumes/WINDOWS10/
+# Copy supportive files excluding install.swm
+rsync -avhP --exclude=sources/install.wim /Volumes/CCCOMA_ISO_VOLUME/ /Volumes/WINDOWS10/
+# Copy splitted install.swm file
+wimlib-imagex split /Volumes/CCCOMA_ISO_VOLUME/sources/install.wim /Volumes/WINDOWS10/sources/install.swm 4000
 # Unmount disks, the ISO file is no longer needed
 hdiutil unmount /Volumes/WINDOWS10/
 hdiutil unmount /Volumes/CCCOMA_ISO_VOLUME/
