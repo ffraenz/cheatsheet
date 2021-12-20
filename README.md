@@ -55,13 +55,14 @@ git remote rm origin
 git mv -f readme.md README.md
 ```
 
-### Configure Git user
+### Configure git
 
 Remove the `--global` flag to only configure the current repository.
 
 ```bash
-git config --global user.name "Fränz Friederes"
-git config --global user.email fraenz@frieder.es
+git config --global user.name "Example User"
+git config --global user.email user@example.com
+git config --global pull.rebase false
 git config --global commit.gpgsign true
 # Use the last 8 hex-formatted bytes from the fingerprint as signing key id
 git config --global user.signingkey 583D205C93C01BC0
