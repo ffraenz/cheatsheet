@@ -11,6 +11,7 @@ Just another nasty cheatsheet.
 - [SSH](#ssh)
 - [Compression](#compression)
 - [Image processing](#image-processing)
+- [Scraping](#scraping)
 - [macOS](#macos)
 - [Windows](#windows)
 
@@ -236,7 +237,36 @@ optipng -o7 *.png
 convert favicon-*.png favicon.ico
 ```
 
+## Scraping
+
+Scrape an entire website to create a local static copy of it:
+
+```bash
+wget -m -k -E -l 7 -t 3 -w 1 -e robots=off --reject "none*" http://example.com
+```
+
 ## macOS
+
+### Resolve code signing issues
+
+Before working with a certiciate from the shell, make sure it is available in the Keychain Access GUI and is shown as valid. If it is not shown as valid, the root certificate may be missing from the [Apple PKI](https://www.apple.com/certificateauthority/), so import it if needed.
+
+Now, make sure certificates are available to the shell by running the following command and checking if it appears in the 'Valid identities only' section.
+
+```bash
+security find-identity -p codesigning
+```
+
+To sign an app or dylib library, do the following:
+
+```bash
+cp /usr/bin/true MyTrue
+codesign -s "Apple Development" -f MyTrue
+```
+
+Resources:
+
+- [Resolving errSecInternalComponent errors during code signing](https://developer.apple.com/forums/thread/712005)
 
 ### Create a bootable macOS installer on macOS
 
