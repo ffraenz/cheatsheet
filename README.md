@@ -70,6 +70,12 @@ git config --global commit.gpgsign true
 git config --global user.signingkey 583D205C93C01BC0
 ```
 
+### Fix “error: cannot run gpg”
+
+```bash
+git config --global gpg.program "$(which gpg)"
+```
+
 ### Create a file patch using diff
 
 ```bash
